@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: telegram-spotify
+
+spotify:
+  client-id: ${SPOTIFY_CLIENT_ID}
+  client-secret: ${SPOTIFY_CLIENT_SECRET}
+  refresh-token: ${SPOTIFY_REFRESH_TOKEN}
+
+telegram:
+  bot:
+    token: ${TELEGRAM_BOT_TOKEN}
+  message:
+    chat-id: ${TELEGRAM_CHAT_ID}
+    id: ${TELEGRAM_MESSAGE_ID}
