@@ -1,4 +1,4 @@
-package dev.scarday.telegramspotify.spotify.configuration;
+package dev.scarday.telegramspotify.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

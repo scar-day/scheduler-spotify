@@ -1,4 +1,4 @@
-package dev.scarday.telegramspotify.spotify.model;
+package dev.scarday.telegramspotify.model;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -19,6 +19,8 @@ public class SpotifyTrack {
     public static final SpotifyTrack MAYBE_PODCAST = SpotifyTrack.builder()
             .songName("Неизвестно что играет, возможно играет подкаст.")
             .build();
+
+    String id;
 
     @Builder.Default
     boolean played = false;
@@ -42,7 +44,7 @@ public class SpotifyTrack {
         return formatTime(durationMs);
     }
 
-    public String getArtistsList() {
+    public String artists() {
         if (artists == null) return null;
         return String.join(", ", artists);
     }

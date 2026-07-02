@@ -1,6 +1,6 @@
-package dev.scarday.telegramspotify.spotify.service;
+package dev.scarday.telegramspotify.service;
 
-import dev.scarday.telegramspotify.spotify.model.SpotifyTrack;
+import dev.scarday.telegramspotify.model.SpotifyTrack;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -45,6 +45,7 @@ public class SpotifyService {
 
             if (!isPlaying) {
                 return SpotifyTrack.builder()
+                        .id(track.getId())
                         .played(false)
                         .paused(true)
                         .songName(trackName)
@@ -56,6 +57,7 @@ public class SpotifyService {
             }
 
             return SpotifyTrack.builder()
+                    .id(track.getId())
                     .played(true)
                     .paused(false)
                     .songName(trackName)

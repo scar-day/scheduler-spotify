@@ -10,7 +10,7 @@ description = "telegram-spotify"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -23,6 +23,8 @@ dependencies {
 
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 
+    implementation("com.github.ben-manes.caffeine:caffeine:3.2.4")
+
     implementation("se.michaelthelin.spotify:spotify-web-api-java:9.1.0")
 
     implementation("org.telegram:telegrambots-longpolling:10.0.0")
@@ -30,24 +32,4 @@ dependencies {
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
-}
-
-pluginManager.withPlugin("org.springframework.boot") {
-    val dockerUser = "scarday"
-    val imageTag = "$dockerUser/${project.name}:latest"
-
-    tasks.named<org.springframework.boot.gradle.tasks.bundling.BootBuildImage>("bootBuildImage") {
-        imageName.set(imageTag)
-        publish.set(false)
-
-        environment.set(mapOf(
-            "BP_JVM_VERSION" to "21",
-            "BP_JVM_PROVIDER" to "temurin"
-        ))
-    }
-
-    tasks.register<Exec>("dockerPush") {
-        dependsOn("bootBuildImage")
-        commandLine("docker", "push", imageTag)
-    }
 }

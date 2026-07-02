@@ -2,16 +2,15 @@ version: '3.8'
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: scarday/telegram-spotify-bot
     container_name: telegram-spotify-bot
     restart: unless-stopped
     environment:
-      - SPRING_PROFILES_ACTIVE=prod
-      - TELEGRAM_BOT_TOKEN=
-      - TELEGRAM_CHAT_ID=
-      - TELEGRAM_MESSAGE_ID=
-      - SPOTIFY_CLIENT_ID=
-      - SPOTIFY_CLIENT_SECRET=
-      - SPOTIFY_REFRESH_TOKEN=
+      - DEBUG_YTDLP=DEBUG                # для дебага (опционально)
+      - TELEGRAM_IDS                     # айди пользователей
+      - TELEGRAM_BOT_TOKEN=              # TOKEN бота
+      - TELEGRAM_CHAT_ID=                # чат в котором нужно менять
+      - TELEGRAM_MESSAGE_ID=             # айди сообщения которое нужно менять
+      - SPOTIFY_CLIENT_ID=               # клиент ID spotify
+      - SPOTIFY_CLIENT_SECRET=           # секретный API ключ для spotify
+      - SPOTIFY_REFRESH_TOKEN=           # refresh token для spotify ;/

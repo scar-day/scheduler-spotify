@@ -1,3 +1,7 @@
+logging:
+  level:
+    dev.scarday: ${DEBUG_YTDLP:INFO}
+
 spring:
   application:
     name: telegram-spotify
@@ -8,6 +12,7 @@ spotify:
   refresh-token: ${SPOTIFY_REFRESH_TOKEN}
 
 telegram:
+  ids: ${TELEGRAM_IDS}
   bot:
     token: ${TELEGRAM_BOT_TOKEN}
   message:

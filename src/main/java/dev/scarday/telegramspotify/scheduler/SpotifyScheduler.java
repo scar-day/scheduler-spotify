@@ -1,8 +1,14 @@
-package dev.scarday.telegramspotify.spotify.scheduler;
+package dev.scarday.telegramspotify.scheduler;
 
-import dev.scarday.telegramspotify.spotify.model.SpotifyTrack;
-import dev.scarday.telegramspotify.spotify.service.SpotifyService;
-import dev.scarday.telegramspotify.telegram.bot.TelegramBot;
+import dev.scarday.telegramspotify.cache.CallbackCache;
+import dev.scarday.telegramspotify.configuration.TelegramConfiguration;
+import dev.scarday.telegramspotify.model.SpotifyTrack;
+import dev.scarday.telegramspotify.service.SpotifyService;
+import dev.scarday.telegramspotify.telegram.message.impl.EditMessageTextMethod;
+import dev.scarday.telegramspotify.telegram.message.keyboard.Keyboard;
+import dev.scarday.telegramspotify.telegram.message.keyboard.factory.SimpleButtonFactory;
+import dev.scarday.telegramspotify.telegram.platform.TelegramPlatform;
+import jakarta.annotation.Nullable;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -10,11 +16,10 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.MessageEntity;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -23,25 +28,46 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class SpotifyScheduler {
     SpotifyService spotifyService;
-    TelegramBot telegramBot;
+    TelegramConfiguration telegramConfiguration;
+    TelegramPlatform platform;
+    SimpleButtonFactory simpleButtonFactory;
 
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    CallbackCache callbackCache;
+
+    private static final DateTimeFormatter FORMATTER =
+            DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+    private static final ZoneId MOSCOW_ZONE = ZoneId.of("Europe/Moscow");
 
     @Scheduled(fixedRate = 15, timeUnit = TimeUnit.SECONDS)
     public void refreshSpotifyStatus() {
-        sdf.setTimeZone(TimeZone.getTimeZone("Europe/Moscow"));
-
         try {
             val track = spotifyService.getCurrentTrack();
-            val messageText = buildTelegramMessage(track);
-            telegramBot.updateMessage(messageText);
+
+            Keyboard keyboard = null;
+
+            if (track != null && track.getId() != null) {
+                callbackCache.register(track);
+
+                keyboard = Keyboard.builder()
+                        .row(simpleButtonFactory.createRepostButton(track.getId()))
+                        .build();
+            }
+
+            platform.execute(EditMessageTextMethod.builder()
+                    .chatId(telegramConfiguration.getMessage().getChatId())
+                    .messageId(telegramConfiguration.getMessage().getId())
+                    .keyboard(keyboard)
+                    .text(buildTelegramMessage(track))
+                    .build()
+            );
         } catch (Exception e) {
             log.error("Ошибка при обновлении статуса в шедулере: {}", e.getMessage(), e);
         }
     }
 
-    private String buildTelegramMessage(SpotifyTrack track) {
-        if (track.isPlayed()) {
+    private String buildTelegramMessage(@Nullable SpotifyTrack track) {
+        if (track != null && track.isPlayed()) {
             return String.format(
                     """
                             [📱](tg://emoji?id=5346074681004801565) *Сейчас играет:*
@@ -52,14 +78,14 @@ public class SpotifyScheduler {
                             
                             Обновлено: %s
                             [‎](%s)""",
-                    track.getArtistsList(),
+                    track.artists(),
                     track.getSongName(),
                     track.getProgressFormatted(),
                     track.getDurationFormatted(),
                     createProgressBar(track.getProgressMs(), track.getDurationMs()),
-                    "*" + sdf.format(new Date()) + "* (GMT+3)", track.getCoverUrl()
+                    "*" + FORMATTER.format(ZonedDateTime.now(MOSCOW_ZONE)) + "* (GMT+3)", track.getCoverUrl()
             );
-        } else if (track.isPaused()) {
+        } else if (track != null && track.isPaused()) {
             return String.format(
                     """
                             ⏸ *Музыка на паузе:*
@@ -69,11 +95,11 @@ public class SpotifyScheduler {
                             
                             Обновлено: %s
                             [‎](%s)""",
-                    track.getArtistsList(),
+                    track.artists(),
                     track.getSongName(),
                     track.getProgressFormatted(),
                     track.getDurationFormatted(),
-                    "*" + sdf.format(new Date()) + "* (GMT+3)", track.getCoverUrl()
+                    "*" + FORMATTER.format(ZonedDateTime.now(MOSCOW_ZONE)) + "* (GMT+3)", track.getCoverUrl()
             );
         } else {
             return "\uD83D\uDCA4";
