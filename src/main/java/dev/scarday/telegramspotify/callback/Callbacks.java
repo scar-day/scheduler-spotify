@@ -6,6 +6,11 @@ import lombok.experimental.UtilityClass;
 public class Callbacks {
     public static final String DOWNLOAD = "download";
 
+    /* TODO */
+    public static final String MP3 = "mp3file";
+    public static final String ALBUM = "album";
+    /* TODO */
+
     public static String getAction(String callbackData) {
         int index = callbackData.indexOf(':');
 
