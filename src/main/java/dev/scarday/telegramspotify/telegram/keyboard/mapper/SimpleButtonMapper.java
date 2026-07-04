@@ -12,11 +12,11 @@ import java.util.Objects;
 @Component
 public class SimpleButtonMapper implements ButtonMapper{
     @Override
-    public InlineKeyboardButton toButton(AbstractButton abstractButton) {
-        return switch (abstractButton) {
+    public InlineKeyboardButton toButton(AbstractButton button) {
+        return switch (button) {
             case CallbackButton callbackButton -> buildTextButton(callbackButton);
             case LinkButton linkButton -> buildLinkButton(linkButton);
-            default -> throw new IllegalStateException("Unexpected value: " + abstractButton);
+            default -> throw new IllegalStateException("Unexpected value: " + button);
         };
     }
 
