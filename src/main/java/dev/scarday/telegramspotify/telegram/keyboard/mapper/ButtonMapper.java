@@ -1,8 +1,8 @@
 package dev.scarday.telegramspotify.telegram.keyboard.mapper;
 
-import dev.scarday.telegramspotify.telegram.message.keyboard.Button;
+import dev.scarday.telegramspotify.telegram.message.keyboard.button.AbstractButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 public interface ButtonMapper {
-    InlineKeyboardButton toButton(Button button);
+    InlineKeyboardButton toButton(AbstractButton abstractButton);
 }

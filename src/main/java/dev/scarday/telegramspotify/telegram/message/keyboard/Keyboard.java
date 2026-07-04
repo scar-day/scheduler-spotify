@@ -1,5 +1,6 @@
 package dev.scarday.telegramspotify.telegram.message.keyboard;
 
+import dev.scarday.telegramspotify.telegram.message.keyboard.button.AbstractButton;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +24,7 @@ public class Keyboard {
     public static class KeyboardBuilder {
         List<Row> rows = new ArrayList<>();
 
-        public KeyboardBuilder row(Button... buttons) {
+        public KeyboardBuilder row(AbstractButton... buttons) {
             rows.add(new Row(List.of(buttons)));
             return this;
         }
@@ -33,5 +34,5 @@ public class Keyboard {
         }
     }
 
-    public record Row(List<Button> buttons) {}
+    public record Row(List<AbstractButton> buttons) {}
 }

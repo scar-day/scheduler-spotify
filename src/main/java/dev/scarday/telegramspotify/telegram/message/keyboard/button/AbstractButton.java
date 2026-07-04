@@ -1,17 +1,14 @@
-package dev.scarday.telegramspotify.telegram.message.keyboard;
+package dev.scarday.telegramspotify.telegram.message.keyboard.button;
 
 import jakarta.annotation.Nullable;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 
+@SuperBuilder
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Button {
+public abstract class AbstractButton {
     @NonNull String label;
     @Nullable String style;
-    @NonNull String data;
-    @NonNull String action;
 }
