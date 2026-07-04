@@ -1,8 +1,7 @@
 package dev.scarday.telegramspotify.telegram.callback;
 
-import dev.scarday.telegramspotify.cache.Callbacks;
+import dev.scarday.telegramspotify.callback.Callbacks;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.val;
 import org.springframework.stereotype.Component;

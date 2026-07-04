@@ -1,4 +1,4 @@
-package dev.scarday.telegramspotify.cache;
+package dev.scarday.telegramspotify.callback;
 
 import lombok.experimental.UtilityClass;
 

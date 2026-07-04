@@ -1,4 +1,4 @@
-package dev.scarday.telegramspotify.cache;
+package dev.scarday.telegramspotify.callback;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
