@@ -1,6 +1,6 @@
 package dev.scarday.telegramspotify.scheduler;
 
-import dev.scarday.telegramspotify.cache.CallbackCache;
+import dev.scarday.telegramspotify.callback.CallbackCache;
 import dev.scarday.telegramspotify.configuration.TelegramConfiguration;
 import dev.scarday.telegramspotify.model.SpotifyTrack;
 import dev.scarday.telegramspotify.service.SpotifyService;
@@ -50,7 +50,8 @@ public class SpotifyScheduler {
                 callbackCache.register(track);
 
                 keyboard = Keyboard.builder()
-                        .row(simpleButtonFactory.createRepostButton(track.getId()))
+                        .row(simpleButtonFactory.createDownloadButton(track.getId()))
+                        .row(simpleButtonFactory.createSourceCodeButton())
                         .build();
             }
 
