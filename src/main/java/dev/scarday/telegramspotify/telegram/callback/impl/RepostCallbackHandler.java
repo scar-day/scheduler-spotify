@@ -29,7 +29,7 @@ public class RepostCallbackHandler implements CallbackHandler {
 
     @Override
     public String action() {
-        return Callbacks.REPOST;
+        return Callbacks.DOWNLOAD;
     }
 
     @Override

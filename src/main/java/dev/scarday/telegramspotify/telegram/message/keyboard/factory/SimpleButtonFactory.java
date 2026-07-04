@@ -15,7 +15,7 @@ public class SimpleButtonFactory implements ButtonFactory {
                 .style(ButtonStyle.GREEN)
                 .label("Скачать данный трек")
                 .data(musicId)
-                .action(Callbacks.REPOST)
+                .action(Callbacks.DOWNLOAD)
                 .build();
     }
 

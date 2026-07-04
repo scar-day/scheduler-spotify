@@ -4,11 +4,7 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class Callbacks {
-    public static final String REPOST = "repost";
-
-    public static String repost(String trackId) {
-        return REPOST + ":" + trackId;
-    }
+    public static final String DOWNLOAD = "download";
 
     public static String getAction(String callbackData) {
         int index = callbackData.indexOf(':');
