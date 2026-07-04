@@ -1,14 +1,13 @@
 package dev.scarday.telegramspotify.telegram.callback.impl;
 
-import dev.scarday.telegramspotify.cache.CallbackCache;
-import dev.scarday.telegramspotify.cache.Callbacks;
+import dev.scarday.telegramspotify.callback.CallbackCache;
+import dev.scarday.telegramspotify.callback.Callbacks;
 import dev.scarday.telegramspotify.service.YtDlpService;
 import dev.scarday.telegramspotify.telegram.callback.CallbackHandler;
 import dev.scarday.telegramspotify.telegram.message.impl.SendAudioMethod;
 import dev.scarday.telegramspotify.telegram.platform.TelegramPlatform;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.val;
 import org.springframework.stereotype.Component;
