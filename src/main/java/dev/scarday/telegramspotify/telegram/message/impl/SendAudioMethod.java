@@ -2,12 +2,10 @@ package dev.scarday.telegramspotify.telegram.message.impl;
 
 import dev.scarday.telegramspotify.telegram.keyboard.mapper.KeyboardMapper;
 import dev.scarday.telegramspotify.telegram.message.MessageMapper;
-import dev.scarday.telegramspotify.telegram.message.keyboard.Keyboard;
-import jakarta.annotation.Nullable;
-import lombok.*;
+import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import org.telegram.telegrambots.meta.api.methods.ParseMode;
+import lombok.val;
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 
@@ -21,18 +19,26 @@ public class SendAudioMethod extends MessageMapper {
 
     @Override
     public SendAudio toApiMethod(KeyboardMapper keyboardMapper) {
+        val audioInputFile = new InputFile(
+                new ByteArrayInputStream(audio),
+                System.currentTimeMillis() + ".mp3"
+        );
+
+        val thumbnailInputFile = new InputFile(
+                new ByteArrayInputStream(thumbnail),
+                "cover.mp3"
+        );
+
         val send = SendAudio.builder()
-                .audio(new InputFile(new ByteArrayInputStream(audio), System.currentTimeMillis() + ".mp3"))
-                .thumbnail(new InputFile(new ByteArrayInputStream(thumbnail), "cover.jpg"))
+                .audio(audioInputFile)
+                .thumbnail(thumbnailInputFile)
                 .caption(text)
-                .chatId(chatId)
-                .parseMode(ParseMode.MARKDOWN)
-                .build();
+                .chatId(chatId);
 
         if (keyboard != null) {
-            send.setReplyMarkup(keyboardMapper.toKeyboard(keyboard));
+            send.replyMarkup(keyboardMapper.toKeyboard(keyboard));
         }
 
-        return send;
+        return send.build();
     }
 }

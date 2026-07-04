@@ -23,13 +23,12 @@ public class EditMessageTextMethod extends MessageMapper {
                 .chatId(chatId)
                 .text(text)
                 .messageId(messageId)
-                .parseMode(ParseMode.MARKDOWN)
-                .build();
+                .parseMode(ParseMode.MARKDOWN);
 
         if (keyboard != null) {
-            edit.setReplyMarkup(keyboardMapper.toKeyboard(keyboard));
+            edit.replyMarkup(keyboardMapper.toKeyboard(keyboard));
         }
 
-        return edit;
+        return edit.build();
     }
 }

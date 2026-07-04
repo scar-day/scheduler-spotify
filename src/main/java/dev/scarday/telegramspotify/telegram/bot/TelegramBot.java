@@ -51,7 +51,7 @@ public class TelegramBot implements LongPollingSingleThreadUpdateConsumer {
         if (!telegramConfiguration.getIds().contains(query.getFrom().getId())) {
             telegramPlatform.answerQuery(
                     query.getId(),
-                    "⚠️ Это не для вас."
+                    "⚠️ Эта кнопка не для вас."
             );
             return;
         }

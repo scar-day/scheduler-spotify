@@ -16,7 +16,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 @Component
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class RepostCallbackHandler implements CallbackHandler {
+public class DownloadCallbackHandler implements CallbackHandler {
     CallbackCache callbackCache;
     TelegramPlatform platform;
     YtDlpService ytDlpService;
@@ -37,16 +37,18 @@ public class RepostCallbackHandler implements CallbackHandler {
         val trackId = Callbacks.getArgument(query.getData());
         val track = callbackCache.get(trackId);
 
+        val queryId = query.getId();
+
         if (track == null) {
             platform.answerQuery(
-                    query.getId(),
-                    "⚠️ Трек уже недоступен."
+                    queryId,
+                    "⚠️ Этот трек уже недоступен."
             );
             return;
         }
 
         platform.answerQuery(
-                query.getId(),
+                queryId,
                 "⏳ Начинаю скачивание..."
         );
 

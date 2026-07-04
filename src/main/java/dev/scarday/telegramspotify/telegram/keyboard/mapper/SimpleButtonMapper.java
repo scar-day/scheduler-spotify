@@ -36,7 +36,7 @@ public class SimpleButtonMapper implements ButtonMapper{
                 .build();
     }
 
-    private String style(AbstractButton abstractButton) {
-        return Objects.requireNonNullElse(abstractButton.getStyle(), "");
+    private String style(AbstractButton button) {
+        return Objects.requireNonNullElse(button.getStyle(), "");
     }
 }
