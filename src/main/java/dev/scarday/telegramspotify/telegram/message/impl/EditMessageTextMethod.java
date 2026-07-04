@@ -5,6 +5,7 @@ import dev.scarday.telegramspotify.telegram.message.MessageMapper;
 import dev.scarday.telegramspotify.telegram.message.keyboard.Keyboard;
 import jakarta.annotation.Nullable;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import lombok.val;
@@ -12,14 +13,9 @@ import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 
 @SuperBuilder
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PROTECTED)
 public class EditMessageTextMethod extends MessageMapper {
-    String chatId;
     int messageId;
-    String text;
-
-    @Nullable
-    Keyboard keyboard;
 
     @Override
     public EditMessageText toApiMethod(KeyboardMapper keyboardMapper) {

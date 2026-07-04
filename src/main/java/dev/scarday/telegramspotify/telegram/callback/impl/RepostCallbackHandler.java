@@ -54,8 +54,8 @@ public class RepostCallbackHandler implements CallbackHandler {
 
         platform.execute(
                 SendAudioMethod.builder()
-                        .chatId(query.getFrom().getId())
-                        .caption(TEMPLATE_MESSAGE.formatted(track.artists(), track.getSongName()))
+                        .chatId(String.valueOf(query.getFrom().getId()))
+                        .text(TEMPLATE_MESSAGE.formatted(track.artists(), track.getSongName()))
                         .audio(resultDownload.audio())
                         .thumbnail(resultDownload.thumbnail())
                         .build()

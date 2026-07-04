@@ -14,21 +14,17 @@ import org.telegram.telegrambots.meta.api.objects.InputFile;
 import java.io.ByteArrayInputStream;
 
 @SuperBuilder
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PROTECTED)
 public class SendAudioMethod extends MessageMapper {
-    String caption;
-    long chatId;
     byte[] audio;
     byte[] thumbnail;
-
-    @Nullable Keyboard keyboard;
 
     @Override
     public SendAudio toApiMethod(KeyboardMapper keyboardMapper) {
         val send = SendAudio.builder()
                 .audio(new InputFile(new ByteArrayInputStream(audio), System.currentTimeMillis() + ".mp3"))
                 .thumbnail(new InputFile(new ByteArrayInputStream(thumbnail), "cover.jpg"))
-                .caption(caption)
+                .caption(text)
                 .chatId(chatId)
                 .parseMode(ParseMode.MARKDOWN)
                 .build();
