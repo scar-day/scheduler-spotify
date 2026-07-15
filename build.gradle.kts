@@ -33,3 +33,20 @@ dependencies {
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
 }
+
+val dockerImage = "scarday/scheduler-spotify"
+val dockerTag = project.findProperty("dockerTag")?.toString() ?: "latest"
+
+tasks.register<Exec>("dockerBuild") {
+    group = "docker"
+    description = "Builds the docker image ($dockerImage:$dockerTag)"
+    dependsOn(tasks.named("bootJar"))
+    commandLine("docker", "build", "-t", "$dockerImage:$dockerTag", ".")
+}
+
+tasks.register<Exec>("dockerPush") {
+    group = "docker"
+    description = "Pushes the docker image ($dockerImage:$dockerTag) to the registry"
+    dependsOn(tasks.named("dockerBuild"))
+    commandLine("docker", "push", "$dockerImage:$dockerTag")
+}
