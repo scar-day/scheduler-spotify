@@ -2,6 +2,7 @@ package dev.scarday.telegramspotify.telegram.message.impl;
 
 import dev.scarday.telegramspotify.telegram.keyboard.mapper.KeyboardMapper;
 import dev.scarday.telegramspotify.telegram.message.MessageMapper;
+import dev.scarday.telegramspotify.utility.FileNameUtility;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -16,24 +17,29 @@ import java.io.ByteArrayInputStream;
 public class SendAudioMethod extends MessageMapper {
     byte[] audio;
     byte[] thumbnail;
+    String performer;
+    String title;
 
     @Override
     public SendAudio toApiMethod(KeyboardMapper keyboardMapper) {
         val audioInputFile = new InputFile(
                 new ByteArrayInputStream(audio),
-                System.currentTimeMillis() + ".mp3"
-        );
-
-        val thumbnailInputFile = new InputFile(
-                new ByteArrayInputStream(thumbnail),
-                "cover.mp3"
+                FileNameUtility.audioFileName(performer, title)
         );
 
         val send = SendAudio.builder()
                 .audio(audioInputFile)
-                .thumbnail(thumbnailInputFile)
+                .performer(performer)
+                .title(title)
                 .caption(text)
                 .chatId(chatId);
+
+        if (thumbnail != null && thumbnail.length > 0) {
+            send.thumbnail(new InputFile(
+                    new ByteArrayInputStream(thumbnail),
+                    "cover.jpg"
+            ));
+        }
 
         if (keyboard != null) {
             send.replyMarkup(keyboardMapper.toKeyboard(keyboard));
@@ -42,3 +48,4 @@ public class SendAudioMethod extends MessageMapper {
         return send.build();
     }
 }
+

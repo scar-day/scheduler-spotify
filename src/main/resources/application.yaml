@@ -1,10 +1,6 @@
 logging:
   level:
-    dev.scarday: ${DEBUG_YTDLP:INFO}
-
-spring:
-  application:
-    name: telegram-spotify
+    dev.scarday: ${YTDLP_LEVEL:INFO}
 
 spotify:
   client-id: ${SPOTIFY_CLIENT_ID}

@@ -1,1 +1,1 @@
-rootProject.name = "telegram-spotify"
+rootProject.name = "scheduler-spotify"

@@ -17,6 +17,10 @@ public class CallbackCache {
     public void register(SpotifyTrack track) {
         callbacks.invalidateAll();
         callbacks.put(track.getId(), track);
+
+        if (track.getAlbumId() != null) {
+            callbacks.put(track.getAlbumId(), track);
+        }
     }
 
     public SpotifyTrack get(String id) {

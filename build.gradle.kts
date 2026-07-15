@@ -21,7 +21,7 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
 
-    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+//    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 
     implementation("com.github.ben-manes.caffeine:caffeine:3.2.4")
 

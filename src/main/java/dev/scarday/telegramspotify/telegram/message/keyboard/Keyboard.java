@@ -29,6 +29,13 @@ public class Keyboard {
             return this;
         }
 
+        public KeyboardBuilder rowIf(boolean condition, AbstractButton... buttons) {
+            if (condition) {
+                row(buttons);
+            }
+            return this;
+        }
+
         public Keyboard build() {
             return new Keyboard(rows);
         }

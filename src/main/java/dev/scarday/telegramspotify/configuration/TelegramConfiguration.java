@@ -1,7 +1,9 @@
 package dev.scarday.telegramspotify.configuration;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,23 +17,26 @@ import java.util.List;
 @ConfigurationProperties(prefix = "telegram")
 @Getter
 @Setter
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class TelegramConfiguration {
 
-    private Bot bot = new Bot();
-    private Message message = new Message();
-    private List<Long> ids = new ArrayList<>();
+    Bot bot = new Bot();
+    Message message = new Message();
+    List<Long> ids = new ArrayList<>();
 
     @Getter
     @Setter
+    @FieldDefaults(level = AccessLevel.PUBLIC)
     public static class Bot {
-        private String token;
+        String token;
     }
 
     @Getter
     @Setter
+    @FieldDefaults(level = AccessLevel.PUBLIC)
     public static class Message {
-        private String chatId;
-        private int id;
+        String chatId;
+        int id;
     }
 
     @Bean

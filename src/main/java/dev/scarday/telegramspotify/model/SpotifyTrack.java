@@ -3,6 +3,7 @@ package dev.scarday.telegramspotify.model;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
@@ -21,6 +22,10 @@ public class SpotifyTrack {
             .build();
 
     String id;
+
+    String albumId;
+    String albumName;
+    String albumType;
 
     @Builder.Default
     boolean played = false;
@@ -44,7 +49,7 @@ public class SpotifyTrack {
         return formatTime(durationMs);
     }
 
-    public String artists() {
+    public @NonNull String artists() {
         if (artists == null) return null;
         return String.join(", ", artists);
     }

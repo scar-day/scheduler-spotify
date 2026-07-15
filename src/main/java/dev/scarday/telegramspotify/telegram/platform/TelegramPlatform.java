@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendMediaGroup;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.generics.TelegramClient;
 
@@ -29,6 +30,7 @@ public class TelegramPlatform implements Platform {
             case SendAudio sa -> telegramClient.execute(sa);
             case EditMessageText emt -> telegramClient.execute(emt);
             case SendMediaGroup smg -> telegramClient.execute(smg);
+            case SendMessage sm -> telegramClient.execute(sm);
             default -> throw new IllegalStateException("Unexpected value: " + method.getMethod());
         }
     }
